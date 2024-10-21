@@ -1,0 +1,33 @@
+name: Security Scan Workflow
+
+on:
+  push:
+    branches:
+      - main  # Runs whenever code is pushed to the main branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      run: |
+        docker-compose up -d  # Start the Docker container for DVWA
+
+    - name: Snyk Security Scan
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # Add your Snyk token to GitHub secrets
+      with:
+        image: dvwa_app  # Name of the Docker image to scan
+
+    - name: StackHawk Security Scan
+      uses: stackhawk/stackhawk-scan-action@v1
+      with:
+        apiKey: ${{ secrets.STACKHAWK_API_KEY }}  # Add StackHawk API key to GitHub secrets
+        appId: <YOUR_APP_ID>  # Replace with your StackHawk app ID
