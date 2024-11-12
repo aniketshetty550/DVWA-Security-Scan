@@ -86,9 +86,9 @@ jobs:
       continue-on-error: true
       run: |-
         npm install snyk -g
-        snyk auth e6b5719c-46fa-4dd7-8cf1-50ebd68923ae
+        snyk auth b6c84802-18ac-4daa-a7af-ca4b71ef6f81
         snyk code test
     - name: Run HawkScan
       uses: stackhawk/hawkscan-action@v2
       with:
-        apiKey: ${{ secrets.HAWK_API_KEY }}
+        apiKey: ${{ hawk.adSaHeAeG3u5vJUOV47Y.iRlL8FNg8xZCPNqEShQ8 }}
